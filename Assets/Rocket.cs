@@ -3,26 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rocket : MonoBehaviour {
+public class Rocket : MonoBehaviour
+{
 
     Rigidbody rigidbody;
     AudioSource audio;
-	
+
     // Use this for initialization
-	void Start () {
+    void Start()
+    {
         rigidbody = GetComponent<Rigidbody>();
 
         audio = GetComponent<AudioSource>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-        ProcessInput();
-	}
 
-    private void ProcessInput()
+    // Update is called once per frame
+    void Update()
     {
-        if(Input.GetKey(KeyCode.Space)) // can thrust while rotaiting
+        Thrust();
+        Rotate();
+    }
+
+    private void Thrust()
+    {
+        if (Input.GetKey(KeyCode.Space)) // can thrust while rotaiting
         {
             print("audio play");
             rigidbody.AddRelativeForce(Vector3.up);
@@ -37,15 +41,22 @@ public class Rocket : MonoBehaviour {
             audio.Stop();
             print("audio stop");
         }
+    }
 
-        if(Input.GetKey(KeyCode.A))
+    private void Rotate()
+    {
+        rigidbody.freezeRotation = true;
+
+        if (Input.GetKey(KeyCode.A))
         {
             transform.Rotate(Vector3.forward);
         }
 
-        else if(Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D))
         {
             transform.Rotate(-Vector3.forward);
         }
+
+        rigidbody.freezeRotation = false;
     }
 }
