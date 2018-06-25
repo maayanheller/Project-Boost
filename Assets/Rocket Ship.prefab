@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4106024858721540}
   - component: {fileID: 54222000294013248}
   - component: {fileID: 82318967464520928}
-  - component: {fileID: 114499669104179364}
+  - component: {fileID: 114739398329920306}
   m_Layer: 0
   m_Name: Rocket Ship
   m_TagString: Untagged
@@ -108,7 +108,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1405092303678074}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -45, y: 2.71, z: 0}
+  m_LocalPosition: {x: -83.2, y: 11.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4370518268978448}
@@ -410,8 +410,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e76f814eeabec374aa0bf45ed7973f68, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -496,7 +496,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &114499669104179364
+--- !u!114 &114739398329920306
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -509,3 +509,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rcsThrust: 250
   mainThrust: 50
+  mainEngine: {fileID: 8300000, guid: e76f814eeabec374aa0bf45ed7973f68, type: 3}
+  success: {fileID: 8300000, guid: b8bdf4d38ea22644c91de0a3a39fa84c, type: 3}
+  death: {fileID: 8300000, guid: 30575b2d7e750044c91c34bdd9e0162e, type: 3}
