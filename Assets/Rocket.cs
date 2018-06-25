@@ -12,6 +12,10 @@ public class Rocket : MonoBehaviour
     [SerializeField] AudioClip success;
     [SerializeField] AudioClip death;
 
+    [SerializeField] ParticleSystem mainEngineParticles;
+    [SerializeField] ParticleSystem successParticles;
+    [SerializeField] ParticleSystem deathParticles;
+
     Rigidbody rigidbody;
     AudioSource audio;
 
@@ -29,7 +33,6 @@ public class Rocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // todo somewhere stop sound on death
         if (state == State.Alive)
         {
             RespondToThrustInput();
@@ -59,17 +62,19 @@ public class Rocket : MonoBehaviour
 
     private void StartSuccessSequence()
     {
-        audio.Stop();
-        audio.PlayOneShot(success, 1f);
         state = State.Transcending;
+        audio.Stop();
+        audio.PlayOneShot(success);
+        successParticles.Play();
         Invoke("LoadNextLevel", 1f); // parameterise time
     }
 
     private void StartDeathSequence()
     {
-        audio.Stop();
-        audio.PlayOneShot(death, 1f);
         state = State.Dying;
+        audio.Stop();
+        audio.PlayOneShot(death);
+        deathParticles.Play();
         Invoke("LoadFirstLevel", 1f); // parameterise time
     }
 
@@ -105,19 +110,26 @@ public class Rocket : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) // can thrust while rotaiting
         {
-            print("audio play");
-            rigidbody.AddRelativeForce(Vector3.up * mainThrust);
-            if (!audio.isPlaying)
-            {
-                audio.PlayOneShot(mainEngine);
-            }
+            ApplyThrust();
         }
 
         else
         {
+            mainEngineParticles.Stop();
             audio.Stop();
             print("audio stop");
         }
     }
+
+    private void ApplyThrust()
+    {
+        rigidbody.AddRelativeForce(Vector3.up * mainThrust);
+        if (!audio.isPlaying)
+        {
+            audio.PlayOneShot(mainEngine);
+        }
+        mainEngineParticles.Play();
+    }
 }
+
 
