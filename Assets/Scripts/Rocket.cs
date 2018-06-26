@@ -76,7 +76,7 @@ public class Rocket : MonoBehaviour
         audio.Stop();
         audio.PlayOneShot(death);
         deathParticles.Play();
-        Invoke("LoadFirstLevel", levelLoadDelay); // parameterise time
+        Invoke("LoadFirstLevel", levelLoadDelay);
     }
 
     private void LoadNextLevel()
