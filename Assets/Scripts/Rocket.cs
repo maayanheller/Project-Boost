@@ -23,6 +23,8 @@ public class Rocket : MonoBehaviour
     enum State { Alive, Dying, Transcending }
     State state = State.Alive;
 
+    bool collisionsDisabled = false;
+
     // Use this for initialization
     void Start()
     {
@@ -39,12 +41,30 @@ public class Rocket : MonoBehaviour
             RespondToThrustInput();
             RespondToRotateInput();
         }
+
+        if(Debug.isDebugBuild) {
+            RespondToDebugKeys();
+        }
     }
 
-
-    private void OnCollisionEnter(Collision collision)
+    void RespondToDebugKeys()
     {
-        if (state != State.Alive) { return; } // ignore collisions when dead
+        if (Input.GetKey(KeyCode.L))
+        {
+            LoadNextLevel();
+        }
+
+        if (Input.GetKey(KeyCode.C))
+        {
+            collisionsDisabled = !collisionsDisabled;
+        }
+
+    }
+    
+
+private void OnCollisionEnter(Collision collision)
+    {
+        if (state != State.Alive || !collisionsDisabled) { return; } // ignore collisions when dead
 
         switch (collision.gameObject.tag)
         {
@@ -81,7 +101,15 @@ public class Rocket : MonoBehaviour
 
     private void LoadNextLevel()
     {
-        SceneManager.LoadScene(1); // todo allow for more than 2 levels
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextSceneIndex = currentSceneIndex + 1;
+
+        if(nextSceneIndex == SceneManager.sceneCountInBuildSettings)
+        {
+            nextSceneIndex = 0;
+        }
+
+        SceneManager.LoadScene(nextSceneIndex); // todo allow for more than 2 levels
     }
 
     private void LoadFirstLevel()
@@ -118,7 +146,6 @@ public class Rocket : MonoBehaviour
         {
             mainEngineParticles.Stop();
             audio.Stop();
-            print("audio stop");
         }
     }
 
